@@ -1,0 +1,119 @@
+@charset "uft-8";
+
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$main-color: #fda2a2;
+$white-color: #fff;
+$black-color: #000;
+$common-font: 'BMJUA';
+
+@mixin flex($direction, $align, $justify) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* body */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $common-font;
+}
+
+#chat {
+  @include flex(column, center, center);
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.chatMsg {
+  width: 100%;
+  padding: 10px 20px;
+  margin-bottom: 50px;
+  font-size: 1.3em;
+  text-align: center;
+  border-radius: 50px;
+  border: 3px dashed $main-color;
+}
+
+.imgbox {
+  width: 80%;
+  margin-bottom: 30px;
+}
+.imgbox img {
+  width: 100%;
+}
+
+form {
+  @include flex(column, center, center);
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid $main-color;
+  overflow: hidden;
+}
+
+form input[type='text'] {
+  width: 100%;
+  padding: 20px;
+  font-size: 0.8em;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+form input[type='submit'] {
+  width: 100%;
+  padding: 20px;
+  font-size: 1.2em;
+  font-family: $common-font;
+  color: #fff;
+  border: none;
+  background-color: $main-color;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    display: grid;
+    height: 100vh;
+    place-items: center;
+  }
+  #chat {
+    max-width: 600px;
+    height: auto;
+    padding: 0;
+  }
+
+  .chatMsg {
+    font-size: 1.5em;
+  }
+
+  .imgbox {
+    width: 70%;
+    margin-bottom: 50px;
+  }
+
+  form {
+    width: 80%;
+  }
+
+  form input[type='text'] {
+    font-size: 1em;
+  }
+
+  form input[type='submit'] {
+    font-size: 1.3em;
+  }
+}
