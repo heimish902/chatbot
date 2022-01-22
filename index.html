@@ -8,17 +8,32 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <div class="modal">
+      <span class="btn">X</span>
+      <div class="text">
+        <h2>푸루랑 대화할 수 있는 키워드</h2>
+        <ul>
+          <li>날씨</li>
+          <li>재미있는 이야기</li>
+          <li>불 켜 / 불 꺼</li>
+          <li>음식 추천 / 뭐 먹지 / 배고파</li>
+          <li>심심해</li>
+        </ul>
+      </div>
+    </div>
     <div id="chat">
+      <button class="btn">?</button>
       <div class="chatMsg">
-        <p>안녕하세요! 푸루와 베코에요!</p>
+        <p>안녕하세요! 푸루예요!</p>
       </div>
       <div class="imgbox">
-        <img src="./src/Animation1.gif" alt="인사하는 푸루와 베코" />
+        <img src="./img/Animation1.gif" alt="" />
       </div>
       <form>
-        <input class="" type="text" placeholder="메시지를 입력해주세요!" />
+        <input class="text" type="text" placeholder="메시지를 입력해주세요!" />
         <input type="submit" value="전송하기" />
       </form>
     </div>
+    <script type="module" src="./js/chat.js"></script>
   </body>
 </html>

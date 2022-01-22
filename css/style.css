@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "BMJUA";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff") format("woff");
@@ -15,15 +16,40 @@ body {
   font-family: "BMJUA";
 }
 
+.open {
+  display: block;
+}
+
 #chat {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
   width: 100vw;
   height: 100vh;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 80px 20px 20px;
+  background-color: #fff;
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #fda2a2;
+  border-radius: 100%;
+  border: 3px dashed #fda2a2;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .chatMsg {
@@ -81,25 +107,76 @@ form input[type=submit] {
     display: grid;
     height: 100vh;
     place-items: center;
+    overflow: hidden;
+  }
+
+  .modal {
+    position: absolute;
+    top: 50%;
+    right: -450px;
+    width: 450px;
+    height: 500px;
+    padding: 60px 30px;
+    background-color: #fff;
+    transform: translateY(-50%);
+    transition: right 1s;
+  }
+  .modal .text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+  .modal .text h2 {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: 400;
+    text-align: center;
+  }
+  .modal .text ul {
+    width: 100%;
+    height: 90%;
+    padding: 20px 30px;
+    border-radius: 30px;
+    border: 3px solid #fda2a2;
+  }
+  .modal .text li {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    list-style: none;
+  }
+  .modal .text li:before {
+    content: "📌";
+    margin-right: 10px;
+  }
+
+  .open {
+    right: 0px;
+    transition: right 1s;
   }
 
   #chat {
-    max-width: 600px;
+    max-width: 550px;
     height: auto;
-    padding: 0;
+    padding: 50px;
+    border-radius: 30px;
   }
 
   .chatMsg {
     font-size: 1.5em;
+    line-height: 1.5em;
   }
 
   .imgbox {
     width: 70%;
-    margin-bottom: 50px;
+    height: 330px;
   }
 
   form {
-    width: 80%;
+    width: 100%;
   }
 
   form input[type=text] {
