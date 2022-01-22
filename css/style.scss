@@ -29,7 +29,45 @@ body {
   padding: 0;
   font-family: $common-font;
 }
+.modal {
+  display: none;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  padding: 60px 30px;
+  background-color: #fff;
+  transition: right 1s;
 
+  .text {
+    @include flex(column, center, space-between);
+    width: 100%;
+    height: 100%;
+
+    h2 {
+      margin: 0;
+      font-size: 1.3em;
+      font-weight: 400;
+      text-align: center;
+    }
+    ul {
+      width: 100%;
+      height: 90%;
+      padding: 20px 30px;
+      border-radius: 30px;
+      border: 3px solid $main-color;
+    }
+    li {
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      line-height: 1.2em;
+      list-style: none;
+    }
+    li:before {
+      content: '📌';
+      margin-right: 10px;
+    }
+  }
+}
 .open {
   display: block;
 }
@@ -40,8 +78,8 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0 auto;
-  padding: 80px 20px 20px;
-  background-color: #fff;
+  padding: 60px 20px 20px;
+  background-color: transparent;
 }
 
 .btn {
@@ -56,7 +94,7 @@ body {
   color: $main-color;
   border-radius: 100%;
   border: 3px dashed $main-color;
-  background-color: transparent;
+  background-color: #fff;
   cursor: pointer;
 }
 .chatMsg {
@@ -67,6 +105,7 @@ body {
   text-align: center;
   border-radius: 50px;
   border: 3px dashed $main-color;
+  background-color: #fff;
 }
 
 .imgbox {
@@ -122,37 +161,8 @@ form input[type='submit'] {
     background-color: #fff;
     transform: translateY(-50%);
     transition: right 1s;
-
-    .text {
-      @include flex(column, center, space-between);
-      width: 100%;
-      height: 100%;
-
-      h2 {
-        margin: 0;
-        font-size: 1.3em;
-        font-weight: 400;
-        text-align: center;
-      }
-      ul {
-        width: 100%;
-        height: 90%;
-        padding: 20px 30px;
-        border-radius: 30px;
-        border: 3px solid $main-color;
-      }
-      li {
-        margin-bottom: 15px;
-        font-size: 1.2em;
-        line-height: 1.2em;
-        list-style: none;
-      }
-      li:before {
-        content: '📌';
-        margin-right: 10px;
-      }
-    }
   }
+
   .open {
     right: 0px;
     transition: right 1s;
@@ -163,6 +173,7 @@ form input[type='submit'] {
     height: auto;
     padding: 50px;
     border-radius: 30px;
+    background-color: #fff;
   }
 
   .chatMsg {

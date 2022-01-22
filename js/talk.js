@@ -11,9 +11,9 @@ let answers = {
   western: ['파스타', '피자', '샌드위치', '햄버거', '스테이크'],
 
   game: [
-    `재미있는 게임 어때요? <br> <a href="https://heimish902.github.io/painting-board/">그림 그리기</a>`,
-    `드럼 게임 어때요? <br> <a href="https://heimish902.github.io/Launchpad/">런치패드 게임</a>`,
-    `MBTI 테스트 한번 해볼까요? <br> <a href="https://heimish902.github.io/MBTI-test/">짱구 MBTI 테스트</a>`,
+    `재미있는 게임 어때요? <br> <a href="https://heimish902.github.io/painting-board/" target="_blank">그림 그리기</a>`,
+    `드럼 게임 어때요? <br> <a href="https://heimish902.github.io/Launchpad/" target="_blank">런치패드 게임</a>`,
+    `MBTI 테스트 한번 해볼까요? <br> <a href="https://heimish902.github.io/MBTI-test/" target="_blank">짱구 MBTI 테스트</a>`,
   ],
 };
 
