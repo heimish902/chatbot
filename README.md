@@ -13,6 +13,15 @@
 - mobile first 제작
 - 기본 HTML & CSS 완성
 
+2022-01-22
+
+- 대화 가능한 키워드
+- 음식 추천 / 뭐 먹지 / 배고파
+- 날씨
+- 재미있는 이야기
+- 심심해
+- 불 켜 / 불 꺼
+
 ## Meta
 
 park ji ho – [hemish902@tistory.com](https://heimish902@tistory.com) - frontend_web@kakao.com
