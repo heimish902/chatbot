@@ -1,4 +1,4 @@
-import answers from './talk.js';
+import json from './question.js';
 
 const API_KEY = 'aa2e624891b98ef211a0ab4604cad0d0';
 
@@ -6,7 +6,7 @@ function getWeather(url) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      talkBot(data);
+      pushData(data);
     });
 }
 
@@ -14,13 +14,12 @@ function handleGeoSucc(position) {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-  console.log(url);
 
   getWeather(url);
 }
 
 function handleGeoErr() {
-  talkBot(null);
+  nullData();
 }
 
 navigator.geolocation.getCurrentPosition(handleGeoSucc, handleGeoErr);
@@ -31,104 +30,160 @@ const input = document.querySelector('input[type=text]');
 const message = document.querySelector('.chatMsg p');
 const button = document.querySelectorAll('.btn');
 
-function talkBot(data) {
-  const weatherData = data;
+let follow = 0;
+let ask = '';
+let answers = '';
+let key = 0;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    chatbot(data);
+function pushData(data) {
+  const index = json.findIndex((el) => el.question == '날씨');
+
+  json[index].answer = [`현재 기온은 ${data.main.temp} 이에요`];
+  json[index].image = ['./img/puru5.jpg'];
+}
+
+function nullData() {
+  const index = json.findIndex((el) => el.question == '날씨');
+
+  json[index].answer = [`현재 날씨를 알 수가 없어요 😥<br>현재 위치를 알려주시면 찾아볼게요! `];
+  json[index].image = ['./img/puru4.jpg'];
+  console.log(json[index]);
+}
+
+function pushJson() {
+  json.push({
+    question: [`${ask}`],
+    answer: [`${answers}`],
+    image: ['./img/puru1.gif'],
+    placeholder: '메시지를 입력해주세요',
   });
+  message.innerHTML = '말을 배웠어요! 감사합니다!';
+  input.placeholder = '메시지를 입력해주세요';
+  key = 0;
+
+  console.log(json);
 }
 
-function chatbot(data) {
+function checkText() {
   const text = input.value;
-  const weatherData = data;
+  if (!text) return;
 
-  showText(weatherData, text);
+  // 말 따라하기
+  if (text.includes('따라해')) {
+    if (follow === 0) {
+      follow = 1;
+      message.innerHTML = '열심히 할게요!';
+      image.src = './img/puru10.gif';
+    }
+    return;
+  } else if (follow === 1) {
+    message.innerHTML = `${text}`;
+
+    if (text.includes('그만해')) {
+      follow = 0;
+      message.innerHTML = '저 잘했나요?? 😍';
+      image.src = './img/puru11.gif';
+    }
+    return;
+  }
+
+  for (let i = 2; i < json.length; i++) {
+    let jsonIndex = json[i];
+    let index = Math.floor(Math.random() * jsonIndex.answer.length);
+
+    // 불 켜
+    if (text.includes(json[0].question)) {
+      switch (document.body.style.background) {
+        case '':
+          message.innerHTML = '이거보다 더 밝으면 눈부시다구요!';
+          image.src = './img/puru7.gif';
+          break;
+        case 'url("./img/bg.jpg")':
+          document.body.style.background = '';
+          message.innerHTML = '일어났어요!';
+          image.src = './img/puru8.gif';
+          break;
+      }
+      return;
+    }
+
+    // 불 꺼
+    if (text.includes(json[1].question)) {
+      switch (document.body.style.background) {
+        case '':
+          document.body.style.background = 'url(./img/bg.jpg)';
+          message.innerHTML = '벌써 잘 시간 이에요?';
+          image.src = './img/puru6.gif';
+          break;
+        case 'url("./img/bg.jpg")':
+          message.innerHTML = `(이미 어두운 상태이다<br>푸루는 자고 있는 것 같다)`;
+          image.src = './img/puru9.png';
+          break;
+      }
+      return;
+    }
+
+    // 나머지 질문들
+    else if (text.includes(jsonIndex.question)) {
+      message.innerHTML = jsonIndex.answer[index];
+      image.src = jsonIndex.image;
+      input.placeholder = jsonIndex.placeholder;
+
+      return;
+    }
+  }
+
+  if (key === 1) {
+    if (text.includes('좋아')) {
+      message.innerHTML = '뭐라고 대답하면 될까요?';
+      input.placeholder = '푸루에게 말을 가르쳐주세요';
+      key = 2;
+    } else {
+      message.innerHTML = `아쉬워요😥\n다음번엔 꼭 가르쳐주세요!`;
+      input.placeholder = '메시지를 입력해주세요!';
+      key = 0;
+    }
+    return;
+  }
+
+  if (key === 2) {
+    answers = text;
+    pushJson();
+    return;
+  }
+
+  message.innerHTML = '제가 대답할 수 있게 말을 가르쳐 주세요!';
+  image.src = './img/puru4.jpg';
+  ask = text;
   input.value = '';
+  input.placeholder = '좋아! / 싫어!';
+  key = 1;
+  alerts();
 }
 
-function showText(data, text) {
-  // 날씨
-  if (text.includes('날씨')) {
-    if (data !== null) {
-      message.innerText = `현재 날씨는 ${data.main.temp}도예요!`;
-      image.src = './img/puru5.jpg';
-    }
-    if (data === null) {
-      message.innerText = '현재 날씨를 알 수가 없어요 😥';
-      setTimeout(() => {
-        message.innerText = '현재 위치를 알려주시면 찾아볼게요! 😍';
-      }, 1000);
-      image.src = './img/puru4.jpg';
-    }
-  }
+function alerts() {
+  var app = document.getElementById('app');
 
-  // 유머
-  if (text.includes('재미있는')) {
-    const index = Math.floor(Math.random() * answers.humors.length);
-    message.innerHTML = answers.humors[index];
+  var typewriter = new Typewriter(app, {
+    loop: false,
+  });
 
-    const img = Math.floor(Math.random() * answers.humorsImage.length);
-    image.src = answers.humorsImage[img];
-  }
-
-  // 불 켜 / 불 꺼
-  if (text.includes('불 꺼')) {
-    message.innerText = '불 끄니까 별이 너무 잘 보여요!';
-    document.body.style.background = 'url(./img/bg.jpg) no-repeat center/cover';
-    image.src = './img/puru6.gif';
-  }
-  if (text.includes('불 켜')) {
-    if (document.body.style.background !== '') {
-      message.innerText = '갑자기 불 키면 눈부신데..!';
-      document.body.style.background = '#fff';
-      image.src = './img/puru7.gif';
-    } else {
-      message.innerText = '이미 밝은걸요!?';
-      image.src = './img/puru4.jpg';
-    }
-  }
-
-  // 음식 관련
-  if (text.includes('뭐 먹지') || text.includes('음식 추천') || text.includes('배고파')) {
-    message.innerText = '어떤 종류 좋아하세요?';
-    input.placeholder = '한식 / 중식 / 일식 / 양식';
-  }
-  if (text.includes('한식')) {
-    const index = Math.floor(Math.random() * answers.korean.length);
-    message.innerText = `${answers.korean[index]} 어때요?`;
-    input.placeholder = '메시지를 입력해주세요';
-    image.src = './img/puru3.gif';
-  }
-  if (text.includes('중식')) {
-    const index = Math.floor(Math.random() * answers.chinese.length);
-    message.innerText = `${answers.chinese[index]} 어때요?`;
-    input.placeholder = '메시지를 입력해주세요';
-  }
-  if (text.includes('일식')) {
-    const index = Math.floor(Math.random() * answers.japanese.length);
-    message.innerText = `${answers.japanese[index]} 어때요?`;
-    input.placeholder = '메시지를 입력해주세요';
-  }
-  if (text.includes('양식')) {
-    const index = Math.floor(Math.random() * answers.western.length);
-    message.innerText = `${answers.western[index]} 어때요?`;
-    input.placeholder = '메시지를 입력해주세요';
-  }
-
-  //심심해
-  if (text.includes('심심')) {
-    const index = Math.floor(Math.random() * answers.game.length);
-    message.innerHTML = `${answers.game[index]}`;
-
-    const img = Math.floor(Math.random() * answers.humorsImage.length);
-    image.src = answers.humorsImage[img];
-  }
+  typewriter
+    .typeString('이전 질문에 대한 대답을 가르쳐 주세요!')
+    .pauseFor(1000)
+    .deleteAll()
+    .start();
 }
 
 button.forEach((btn) => {
   btn.addEventListener('click', () => {
     document.querySelector('.modal').classList.toggle('open');
   });
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  checkText();
+
+  input.value = '';
 });

@@ -3,9 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
+    />
     <title>Chatbot</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://unpkg.com/typewriter-effect@2.3.1/dist/core.js"></script>
   </head>
   <body>
     <div class="modal">
@@ -16,12 +20,14 @@
           <li>날씨</li>
           <li>재미있는 이야기</li>
           <li>불 켜 / 불 꺼</li>
-          <li>음식 추천 / 뭐 먹지 / 배고파</li>
+          <li>배고파</li>
           <li>심심해</li>
+          <li>따라해 / 그만해</li>
         </ul>
       </div>
     </div>
     <div id="chat">
+      <div id="app"></div>
       <button class="btn">?</button>
       <div class="chatMsg">
         <p>안녕하세요! 푸루예요!</p>
@@ -34,6 +40,7 @@
         <input type="submit" value="전송하기" />
       </form>
     </div>
+
     <script type="module" src="./js/chat.js"></script>
   </body>
 </html>
